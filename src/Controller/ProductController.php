@@ -12,7 +12,7 @@ class ProductController extends Controller
     /**
      * @Route("/product", name="product")
      **/
-    public function index()
+    public function index ()
     {
         // you can fetch the EntityManager via $this->getDoctrine()
         // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
@@ -35,7 +35,7 @@ class ProductController extends Controller
     /**
      * @Route("/product/{id}", name="product_show")
      */
-    public function show($id) {//Function arguments for simple query using  SensioFrameworkExtraBundle: Product $product
+    public function show ($id) {//Function arguments for simple query using  SensioFrameworkExtraBundle: Product $product
         //Manually
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
@@ -55,7 +55,7 @@ class ProductController extends Controller
     /**
      * @Route("product/edit/{id}")
      */
-    public function update($id) {
+    public function update ($id) {
         $entityManager = $this->getDoctrine()->getManager();
         $product = $entityManager->getRepository(Product::class)->find($id);
 
@@ -68,6 +68,23 @@ class ProductController extends Controller
         $entityManager->flush();
 
         return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
+    }
+
+    /**
+     * @Route("product/delete/{id}")
+     */
+    public function delete ($id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('No product found for ID ' . $id);
+        }
+
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('product_show', ['id' => 2]);
     }
 }
 
