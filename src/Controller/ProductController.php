@@ -35,14 +35,15 @@ class ProductController extends Controller
     /**
      * @Route("/product/{id}", name="product_show")
      */
-    public function show($id) {
-        $product = $this->getDoctrine()
+    public function show(Product $product) {//Function arguments for manual query: $id
+        //Manually
+        /*$product = $this->getDoctrine()
             ->getRepository(Product::class)
             ->find($id);
 
         if (!$product) {
             throw $this->createNotFoundException('No prod found for ID ' . $id);
-        }
+        }*/
 
         return new Response('<html><body>Check out this great product: '.$product->getName().'</body></html>');
         // or render a template
