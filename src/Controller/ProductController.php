@@ -86,5 +86,18 @@ class ProductController extends Controller
 
         return $this->redirectToRoute('product_show', ['id' => 2]);
     }
+
+    /**
+     * @Route("products/{minPrice}")
+     */
+    public function showMinPrice ($minPrice) {
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
+
+        if (!$products) {
+            throw $this->createNotFoundException('No products found');
+        }
+
+        return $this->render('products/show_products.html.twig', ['products' => $products, 'minPrice' => $minPrice]);
+    }
 }
 

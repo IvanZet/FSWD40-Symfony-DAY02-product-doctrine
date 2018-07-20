@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<p>Dumping parameters:</p><br>
+	{{ dump(products) }}<br>
+	{{ dump(minPrice) }}<br>
+
+	<table>
+		<caption>Products with price greater than {{ minPrice }}</caption>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for aProduct in products %}
+				<tr>
+					<td>{{ aProduct.name }}</td>
+					<td>{{ aProduct.price }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

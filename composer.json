@@ -1,4 +1,4 @@
-k{
+{
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -16,6 +16,7 @@ k{
         "symfony/yaml": "^4.1"
     },
     "require-dev": {
+        "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^4.1",
         "symfony/profiler-pack": "^1.0",
         "symfony/web-server-bundle": "^4.1"
