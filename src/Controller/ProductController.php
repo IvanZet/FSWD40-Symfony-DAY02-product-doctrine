@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     /**
      * @Route("/product", name="product")
-     */
+     **/
     public function index()
     {
         // you can fetch the EntityManager via $this->getDoctrine()
@@ -31,4 +31,23 @@ class ProductController extends Controller
 
         return new Response('Saved new product with id '.$product->getId());
     }
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     */
+    public function show($id) {
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('No prod found for ID ' . $id);
+        }
+
+        return new Response('<html><body>Check out this great product: '.$product->getName().'</body></html>');
+        // or render a template
+        // in the template, print things with {{ product.name }}
+        // return $this->render('product/show.html.twig', ['product' => $product]);
+    }
 }
+
