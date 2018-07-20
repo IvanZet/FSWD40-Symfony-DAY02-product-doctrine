@@ -35,20 +35,39 @@ class ProductController extends Controller
     /**
      * @Route("/product/{id}", name="product_show")
      */
-    public function show(Product $product) {//Function arguments for manual query: $id
+    public function show($id) {//Function arguments for simple query using  SensioFrameworkExtraBundle: Product $product
         //Manually
-        /*$product = $this->getDoctrine()
+        $product = $this->getDoctrine()
             ->getRepository(Product::class)
             ->find($id);
 
         if (!$product) {
             throw $this->createNotFoundException('No prod found for ID ' . $id);
-        }*/
+        }
 
         return new Response('<html><body>Check out this great product: '.$product->getName().'</body></html>');
         // or render a template
         // in the template, print things with {{ product.name }}
         // return $this->render('product/show.html.twig', ['product' => $product]);
+    }
+
+
+    /**
+     * @Route("product/edit/{id}")
+     */
+    public function update($id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('No product found for ID ' . $id);
+        }
+
+        $product->setName('Keyboard advanced');
+        //Implement change of name
+        $entityManager->flush();
+
+        return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
     }
 }
 
